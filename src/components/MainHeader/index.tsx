@@ -1,8 +1,9 @@
+import { Toggle } from '../Toggle'
 import { Container, Profile, Welcome, UserName } from './styles'
 export const MainHeader: React.FC = () => {
   return (
     <Container>
-      <h1>Toogle</h1>
+      <Toggle />
 
       <Profile>
         <Welcome> Olá, </Welcome>
