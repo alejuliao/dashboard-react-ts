@@ -12,15 +12,15 @@ export const Aside: React.FC = () => {
         </Title>
       </Header>
       <MenuContainer>
-        <MenuItemLink href="">
+        <MenuItemLink href="/dashboard">
           <MdDashboard />
           Dashboard
         </MenuItemLink>
-        <MenuItemLink href="">
+        <MenuItemLink href="/list/entry-balance">
           <MdArrowUpward />
           Entrada
         </MenuItemLink>
-        <MenuItemLink href="">
+        <MenuItemLink href="/list/exit-entry">
           <MdArrowDownward />
           Saída
         </MenuItemLink>
