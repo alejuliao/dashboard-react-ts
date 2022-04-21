@@ -2,8 +2,8 @@ import React from "react";
 import { Container } from "./styles";
 interface ISelectInputProps {
   options: {
-    value: string,
-    label: string
+    value: string | undefined,
+    label: string | undefined
   }[],
 }
 export function SelectInput({ options }: ISelectInputProps) {

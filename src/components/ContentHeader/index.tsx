@@ -2,9 +2,9 @@ import { SelectInput } from "../SelectInput";
 import { Container, Controllers, TitleContainer } from "./styles";
 
 interface IContentHeaderProps {
-  title: string;
-  lineColor: string;
-  children?: string;
+  title: string | undefined;
+  lineColor?: string | undefined;
+  children?: JSX.Element | JSX.Element[];
 }
 export function ContentHeader({ title, lineColor, children }: IContentHeaderProps) {
 
