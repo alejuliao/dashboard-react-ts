@@ -26,6 +26,8 @@ interface IData {
 }
 export const List: React.FC<IRouteParams> = () => {
   const [data, setData] = useState<IData[]>([])
+  const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1))
+  const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()))
   const { type } = useParams()
   console.log(type)
   const titles = useMemo(() => {
@@ -33,7 +35,10 @@ export const List: React.FC<IRouteParams> = () => {
   }, [type]);
 
   const months = [
-    { value: 10, label: 'Outubro' },
+    { value: 1, label: 'Janeiro' },
+    { value: 2, label: 'Fevereiro' },
+    { value: 3, label: 'março' },
+    { value: 4, label: 'abril' },
     { value: 11, label: 'Novembro' },
     { value: 12, label: 'Dezembro' },
   ]
@@ -41,14 +46,24 @@ export const List: React.FC<IRouteParams> = () => {
     { value: 2019, label: 2019 },
     { value: 2020, label: 2020 },
     { value: 2021, label: 2021 },
+    { value: 2022, label: 2022 },
   ]
   const listData = useMemo(() => {
     return type === 'entry-balance' ? gains : expenses;
   }, [type])
   useEffect(() => {
-    const response = listData.map(item => {
+    const filteredData = listData.filter(item => {
+      const date = new Date(item.date)
+      const month = String(date.getMonth() + 1)
+      const year = String(date.getFullYear())
+
+      return month === monthSelected && year === yearSelected;
+    })
+    const formattedData = filteredData.map((item, index) => {
+
+      // const response = listData.map(item => {
       return {
-        Id: String(Math.random() * data.length),
+        // Id: index,
         description: item.description,
         amountFormatted: formatCurrency(Number(item.amount)),
         frequency: item.frequency,
@@ -56,19 +71,20 @@ export const List: React.FC<IRouteParams> = () => {
         tagColor: item.frequency === 'recorrente' ? '#4e41f0' : '#e44'
       }
     })
-    setData(response)
-  }, []);
+    setData(formattedData)
+  }, [listData, monthSelected, yearSelected]);
   return (
     <Container>
       <ContentHeader title={titles.title} lineColor={titles.lineColor}>
-        <SelectInput options={months} />
+        <SelectInput options={months} onChange={(e) => setMonthSelected(e.target.value)} defaultValue={monthSelected} />
+        <SelectInput options={years} onChange={(e) => setYearSelected(e.target.value)} defaultValue={yearSelected} />
       </ContentHeader>
 
       <Content>
-        {data.map(item => (
+        {data.map((item, index) => (
 
           <HistoryFinanceCard
-            key={item.id}
+            key={index}
             tagColor={item.tagColor}
             title={item.description}
             subtitle={item.dateFormatted}
@@ -82,8 +98,3 @@ export const List: React.FC<IRouteParams> = () => {
     </Container>
   )
 }
-// export function List() {
-//   return (
-//     <h1>Dashboard</h1>
-//   )
-// }
