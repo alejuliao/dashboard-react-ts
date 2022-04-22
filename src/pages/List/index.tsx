@@ -15,7 +15,7 @@ import {
   Filters
 } from './styles'
 import { useParams } from 'react-router-dom'
-// import listOfMonths from '../../utils/months'
+import listOfMonths from '../../utils/months'
 interface IRouteParams {
   params: {
     type: string;
@@ -31,8 +31,8 @@ interface IData {
 }
 export const List: React.FC<IRouteParams> = () => {
   const [data, setData] = useState<IData[]>([])
-  const [monthSelected, setMonthSelected] = useState<string>(String(new Date().getMonth() + 1))
-  const [yearSelected, setYearSelected] = useState<string>(String(new Date().getFullYear()))
+  const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1);
+  const [yearSelected, setYearSelected] = useState<number>(new Date().getFullYear());
   const [frequencyFilterSelected, setFrequencyFilterSelected] = useState(['recorrente', 'eventual'])
 
   const { type } = useParams()
@@ -43,56 +43,59 @@ export const List: React.FC<IRouteParams> = () => {
       :
       { title: 'Saídas', lineColor: '#e44', data: expenses }
   }, [])
-  const months = [
-    { value: 1, label: 'Janeiro' },
-    { value: 2, label: 'Fevereiro' },
-    { value: 3, label: 'março' },
-    { value: 4, label: 'abril' },
-    { value: 5, label: 'maio' },
-    { value: 6, label: 'junho' },
-    { value: 7, label: 'julho' },
-    { value: 8, label: 'agosto' },
-    { value: 9, label: 'setembro' },
-    { value: 10, label: 'Outubro' },
-    { value: 11, label: 'Novembro' },
-    { value: 12, label: 'Dezembro' },
-  ]
-  const years = [
-    { value: 2019, label: 2019 },
-    { value: 2020, label: 2020 },
-    { value: 2021, label: 2021 },
-    { value: 2022, label: 2022 },
-  ]
+  // const months = [
+  //   { value: 1, label: 'Janeiro' },
+  //   { value: 2, label: 'Fevereiro' },
+  //   { value: 3, label: 'março' },
+  //   { value: 4, label: 'abril' },
+  //   { value: 5, label: 'maio' },
+  //   { value: 6, label: 'junho' },
+  //   { value: 7, label: 'julho' },
+  //   { value: 8, label: 'agosto' },
+  //   { value: 9, label: 'setembro' },
+  //   { value: 10, label: 'Outubro' },
+  //   { value: 11, label: 'Novembro' },
+  //   { value: 12, label: 'Dezembro' },
+  // ]
+  // const years = [
+  //   { value: 2019, label: 2019 },
+  //   { value: 2020, label: 2020 },
+  //   { value: 2021, label: 2021 },
+  //   { value: 2022, label: 2022 },
+  // ]
 
 
 
-  // const years = useMemo(() => {
-  //   let uniqueYears: number[] = [];
-  // const {data} = pageData;
-  //   data.forEach(item => {
-  //     const date = new Date(item.date)
-  //     const year = date.getFullYear()
+  const years = useMemo(() => {
+    let uniqueYears: number[] = [];
+    const { data } = pageData;
+    data.forEach(item => {
+      const date = new Date(item.date)
+      const year = date.getFullYear()
 
-  //     if (!uniqueYears.includes(year)) {
-  //       uniqueYears.push(year)
-  //     }
-  //   });
-  //   return uniqueYears.map(year => {
-  //     return {
-  //       value: year,
-  //       label: year,
-  //     }
-  //   })
-  // }, [data])
-  // const months = useMemo(() => {
-  //   return listOfMonths.map((month, index) => {
-  //     return {
-  //       value: index + 1,
-  //       label: month,
-  //     }
-  //   })
+      if (!uniqueYears.includes(year)) {
+        uniqueYears.push(year)
+        uniqueYears.sort()
 
-  // }, [])
+        setYearSelected(year)
+      }
+    });
+    return uniqueYears.map(year => {
+      return {
+        value: year,
+        label: year,
+      }
+    })
+  }, [data])
+  const months = useMemo(() => {
+    return listOfMonths.map((month, index) => {
+      return {
+        value: index + 1,
+        label: month,
+      }
+    })
+
+  }, [])
   const handleFrequencyClick = (frequency: string) => {
     const alreadySelected = frequencyFilterSelected.findIndex(item => item === frequency);
 
@@ -103,13 +106,29 @@ export const List: React.FC<IRouteParams> = () => {
       setFrequencyFilterSelected((prev) => [...prev, frequency])
     }
   }
+  const handleMonthSelected = (month: string) => {
+    try {
+      const parseMonth = Number(month)
+      setMonthSelected(parseMonth)
+    } catch (error) {
+      throw new Error('invalid month value. Is accept 1 - 12')
+    }
+  }
+  const handleYearSelected = (year: string) => {
+    try {
+      const parseYear = Number(year)
+      setYearSelected(parseYear)
+    } catch (error) {
+      throw new Error('invalid year value. Is accept integer numbers')
+    }
+  }
   useEffect(() => {
     const { data } = pageData
 
     const filteredData = data.filter(item => {
       const date = new Date(item.date)
-      const month = String(date.getMonth() + 1)
-      const year = String(date.getFullYear())
+      const month = date.getMonth() + 1
+      const year = date.getFullYear()
 
       return month === monthSelected && year === yearSelected && frequencyFilterSelected.includes(item.frequency);
     }, [])
@@ -132,11 +151,11 @@ export const List: React.FC<IRouteParams> = () => {
         lineColor={pageData.lineColor}>
         <SelectInput
           options={months}
-          onChange={(e) => setMonthSelected(e.target.value)}
+          onChange={(e) => handleMonthSelected(e.target.value)}
           defaultValue={monthSelected} />
         <SelectInput
           options={years}
-          onChange={(e) => setYearSelected(e.target.value)}
+          onChange={(e) => handleYearSelected(e.target.value)}
           defaultValue={yearSelected} />
       </ContentHeader>
       <Filters>
