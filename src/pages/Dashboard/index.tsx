@@ -1,10 +1,11 @@
 import React, { useMemo, useState } from 'react'
 import { ContentHeader } from '../../components/ContentHeader'
 import { SelectInput } from '../../components/SelectInput'
-import { Container } from './styles'
+import { Container, Content } from './styles'
 import gains from '../../repositories/gains'
 import expenses from '../../repositories/expenses'
 import listOfMonths from '../../utils/months'
+import { WalletBox } from '../../components/WalletBox'
 
 export const Dashboard: React.FC = () => {
   const [monthSelected, setMonthSelected] = useState<number>(new Date().getMonth() + 1);
@@ -66,6 +67,29 @@ export const Dashboard: React.FC = () => {
           onChange={(e) => handleYearSelected(e.target.value)}
           defaultValue={yearSelected} />
       </ContentHeader>
+      <Content>
+        <WalletBox
+          title="saldo"
+          color='#4e41f0'
+          amount={150.00}
+          footerLabel="atualozad com base nas entradas e saidas"
+          icon='dollar'
+        />
+        <WalletBox
+          title="entradas"
+          color='#f7931b'
+          amount={5000.00}
+          footerLabel="atualozad com base nas entradas e saidas"
+          icon='arrowUp'
+        />
+        <WalletBox
+          title="saida"
+          color='#e44'
+          amount={220.00}
+          footerLabel="atualozad com base nas entradas e saidas"
+          icon='arrowDown'
+        />
+      </Content>
     </Container>
   )
 }
