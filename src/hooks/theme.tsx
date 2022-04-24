@@ -1,5 +1,3 @@
-
-
 import { createContext, useContext, useState } from 'react';
 import dark from '../styles/theme/dark'
 import light from '../styles/theme/light'
@@ -27,12 +25,23 @@ interface ITheme {
 }
 const ThemeContext = createContext<IThemeContext>({} as IThemeContext)
 
-const ThemeProvider: React.FC = ({ children }: any) => {
-  const [theme, setTheme] = useState<ITheme>(dark)
+const ThemeProvider = ({ children }: any) => {
+  const [theme, setTheme] = useState<ITheme>(() => {
+    const themeSaved = localStorage.getItem('@minha-carteira:theme');
+    if (themeSaved) {
+      return JSON.parse(themeSaved)
+    } else {
+      return dark
+    }
+  })
   const toggleTheme = () => {
     if (theme.title === 'dark') {
+      console.log('lig')
       setTheme(light)
+      localStorage.setItem('@minha-carteira:theme', JSON.stringify(light))
     } else {
+      console.log('dark')
+      localStorage.setItem('@minha-carteira:theme', JSON.stringify(dark))
       setTheme(dark)
     }
   }

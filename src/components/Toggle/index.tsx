@@ -1,16 +1,23 @@
 import { useState } from "react";
 import { Container, ToggleLabel, ToggleSelector } from "./styles";
-export const Toggle = () => {
-  const [online, setOnline] = useState(false)
+
+interface IToggleProps {
+  labelLeft: string;
+  labelRight: string;
+  checked: boolean;
+  onChange(): void;
+}
+export const Toggle = ({ labelLeft, labelRight, checked, onChange }: IToggleProps) => {
+  // const [online, setOnline] = useState(false)
   return (
     <Container>
-      <ToggleLabel>Ligth</ToggleLabel>
+      <ToggleLabel>{labelRight}</ToggleLabel>
       <ToggleSelector
-        checked={online}
+        checked={checked}
         uncheckedIcon={false}
         checkedIcon={false}
-        onChange={() => setOnline(!online)} />
-      <ToggleLabel>Dark</ToggleLabel>
+        onChange={onChange} />
+      <ToggleLabel>{labelLeft}</ToggleLabel>
     </Container >
   )
 }
