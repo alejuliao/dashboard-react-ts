@@ -7,6 +7,7 @@ import expenses from '../../repositories/expenses'
 import listOfMonths from '../../utils/months'
 import { WalletBox } from '../../components/WalletBox'
 import { MessageBox } from '../../components/MessageBox'
+import { DashPieChart } from '../../components/DashPieChart'
 import happyImg from '../../assets/happy.svg'
 import sadImg from '../../assets/sad.svg'
 import grinningImg from '../../assets/grinning.svg'
@@ -164,6 +165,7 @@ export const Dashboard: React.FC = () => {
           icon={message.icon}
 
         />
+        <DashPieChart />
       </Content>
     </Container>
   )
