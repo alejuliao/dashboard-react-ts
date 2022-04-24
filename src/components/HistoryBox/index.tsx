@@ -40,7 +40,7 @@ export function HistoryBox({ data, lineColorAmountEntry, lineColorAmountOutput }
           <LineChart data={data}>
             <CartesianGrid strokeDasharray="3 3" stroke="#cecece" />
             <XAxis dataKey="month" stroke="#cecece" />
-            <Tooltip formatter={(value) => formatCurrency(Number(value))} />
+            <Tooltip formatter={(value: any) => formatCurrency(Number(value))} />
             <Line
               type="monotone"
               dataKey="amountEntry"

@@ -8,47 +8,45 @@ interface IPieChartProps {
     color: string;
   }[]
 }
-export const PieChartBox = ({ data }: IPieChartProps) => {
-  return (
+export const PieChartBox = ({ data }: IPieChartProps) => (
 
-    <Container>
-      <SideLeft>
-        <h2>
-          Relação
-        </h2>
-        <LegendContainer>
-          {
-            data.map((indicator) => (
+  <Container>
+    <SideLeft>
+      <h2>
+        Relação
+      </h2>
+      <LegendContainer>
+        {
+          data.map((indicator) => (
 
-              <LegendStyle key={indicator.name} color={indicator.color}>
-                <div>{indicator.percent}</div>
-                <span>{indicator.name}</span>
-              </LegendStyle>
-            ))
-          }
+            <LegendStyle key={indicator.name} color={indicator.color}>
+              <div>{indicator.percent}</div>
+              <span>{indicator.name}</span>
+            </LegendStyle>
+          ))
+        }
 
 
-        </LegendContainer>
-      </SideLeft>
+      </LegendContainer>
+    </SideLeft>
 
-      <SideRight>
-        <ResponsiveContainer>
-          <PieChart>
-            <Pie
-              data={data}
-              // labelLine={false}
-              dataKey='percent'
-            >
-              {
-                data.map((indicator) => (
-                  <Cell key={indicator.name} fill={indicator.color} />
-                ))
-              }
-            </Pie>
-          </PieChart>
-        </ResponsiveContainer>
-      </SideRight>
-    </Container>
+    <SideRight>
+      <ResponsiveContainer>
+        <PieChart>
+          <Pie
+            data={data}
+            // labelLine={false}
+            dataKey='percent'
+          >
+            {
+              data.map((indicator) => (
+                <Cell key={indicator.name} fill={indicator.color} />
+              ))
+            }
+          </Pie>
+        </PieChart>
+      </ResponsiveContainer>
+    </SideRight>
+  </Container>
 
-  )
-}
+)
