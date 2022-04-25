@@ -47,6 +47,7 @@ export const Container = styled.div<IContainerProps>`
   }
   @media (max-width: 420px) {
     width: 100%;
+    margin-bottom: 10px;
     > h1 {
       display: flex;
 
