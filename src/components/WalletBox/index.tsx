@@ -34,14 +34,16 @@ export function WalletBox({
   return (
     <Container color={color}>
       <span>{title}</span>
-      <h1><CountUp
-        end={amount}
-        prefix={"R$ "}
-        separator="."
-        decimal=","
-        decimals={2}
-      // preserveValue={true}
-      /></h1>
+      <h1>
+        <strong>R$</strong>
+        <CountUp
+          end={amount}
+          // prefix={"R$ "}
+          separator="."
+          decimal=","
+          decimals={2}
+        // preserveValue={true}
+        /></h1>
       <small>{footerLabel}</small>
       <img src={iconSelected} alt={title} />
 
