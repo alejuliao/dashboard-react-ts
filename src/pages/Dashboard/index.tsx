@@ -112,20 +112,20 @@ export const Dashboard: React.FC = () => {
   }, [totalBalance])
   const relationExpensesVersusGains = useMemo(() => {
     const total = totalGains + totalExpenses
-    const gainsPercent = (totalGains / total) * 100;
-    const expensesPercent = (totalExpenses / total) * 100;
+    const gainsPercent = Number((totalGains / total) * 100).toFixed(1);
+    const expensesPercent = Number((totalExpenses / total) * 100).toFixed(1);
     console.log(gainsPercent, expensesPercent)
     const data = [
       {
         name: "Entradas",
-        value: totalExpenses,
-        percent: Number(gainsPercent.toFixed(1)),
+        value: totalGains,
+        percent: gainsPercent ? gainsPercent : 0,
         color: '#f7931b'
       },
       {
         name: "Saídas",
         value: totalExpenses,
-        percent: Number(expensesPercent.toFixed(1)),
+        percent: expensesPercent ? expensesPercent : 0,
         color: '#e44'
       },
     ]
@@ -195,18 +195,19 @@ export const Dashboard: React.FC = () => {
         }
       })
     const total = amountRecurrent + amountEventual;
-
+    const recurrentPercent = Number(((amountRecurrent / total) * 100).toFixed(1))
+    const eventualPercent = Number(((amountEventual / total) * 100).toFixed(1))
     return [
       {
         name: 'Recorrentes',
         amount: amountRecurrent,
-        percent: Number(((amountRecurrent / total) * 100).toFixed(1)),
+        percent: recurrentPercent ? recurrentPercent : 0,
         color: "#F7931B",
       },
       {
         name: 'Eventuais',
         amount: amountEventual,
-        percent: Number(((amountEventual / total) * 100).toFixed(1)),
+        percent: eventualPercent ? eventualPercent : 0,
         color: "#e44",
       }
     ]
@@ -231,18 +232,19 @@ export const Dashboard: React.FC = () => {
         }
       })
     const total = amountRecurrent + amountEventual;
-
+    const recurrentPercent = Number(((amountRecurrent / total) * 100).toFixed(1))
+    const eventualPercent = Number(((amountEventual / total) * 100).toFixed(1))
     return [
       {
         name: 'Recorrentes',
         amount: amountRecurrent,
-        percent: Number(((amountRecurrent / total) * 100).toFixed(1)),
+        percent: recurrentPercent ? recurrentPercent : 0,
         color: "#F7931B",
       },
       {
         name: 'Eventuais',
         amount: amountEventual,
-        percent: Number(((amountEventual / total) * 100).toFixed(1)),
+        percent: eventualPercent ? eventualPercent : 0,
         color: "#e44",
       }
     ]
