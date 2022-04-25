@@ -112,9 +112,8 @@ export const Dashboard: React.FC = () => {
   }, [totalBalance])
   const relationExpensesVersusGains = useMemo(() => {
     const total = totalGains + totalExpenses
-    const gainsPercent = Number((totalGains / total) * 100).toFixed(1);
-    const expensesPercent = Number((totalExpenses / total) * 100).toFixed(1);
-    console.log(gainsPercent, expensesPercent)
+    const gainsPercent = Number(((totalGains / total) * 100).toFixed(1));
+    const expensesPercent = Number(((totalExpenses / total) * 100).toFixed(1));
     const data = [
       {
         name: "Entradas",
